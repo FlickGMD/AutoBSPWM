@@ -34,7 +34,9 @@ sudo apt-get install libxcb-randr0-dev libxcb-xtest0-dev libxcb-xinerama0-dev li
 sudo apt install xcb -y
 sudo apt  install build-essential git vim xcb libxcb-util0-dev libxcb-ewmh-dev libxcb-randr0-dev libxcb-icccm4-dev libxcb-keysyms1-dev libxcb-xinerama0-dev libasound2-dev libxcb-xtest0-dev libxcb-shape0-de -y
 sudo apt install -y python3-venv
-sudo apt install glxinfo
+sudo apt install glxinfo -y
+sudo apt install npm -y
+
 # INSTALANDO BSPWM Y SU REPO
 
 # PICOM INSTALACION
@@ -60,9 +62,14 @@ sudo tar -xf $kitty
 cd ..
 # INSTALACIÓN DE NVIM
 nvim=$(7z l nvim-linux64.tar.gz | tail -n 3 | head -n 1 | awk 'NF{print $NF}')
-cd PaquetesNvim
+cd nvim
 7z x nvim-linux64.tar.gz 
 sudo tar -xf $nvim
+git clone https://github.com/NvChad/starter ~/.config/nvim
+if [[ -f ~/.config/nvim/lua/configs/lspconfig.lua ]]; then
+  rm ~/.config/nvim/lua/configs/lspconfig.lua
+  mv lsp/lspconfig.lua ~/.config/nvim/lua/configs/lspconfig.lua
+fi
 
 python3 -m venv .venv
 source .venv/bin/activate
