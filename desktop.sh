@@ -12,6 +12,7 @@ function handler(){
 }
 trap handler INT
 RUTA=$(pwd)
+usuario=$(whoami)
 # ACTUALIZAMOS EL PROGRAMA EN BASE A NUESTRO SISTEMA OPERATIVO
 if [[ $(hostname) == *"kali"* ]]; then
   echo -e "\n[*] Actualizando sistema kali."
@@ -27,6 +28,7 @@ else
   echo -e "\n[!] $(hostname): NO ENCONTRADO."
   exit 1
 fi
+
 
 # INSTALANDO LOS PRINCIPALES 
 sudo apt install bspwm sxhkd polybar rofi -y
@@ -70,6 +72,18 @@ if [[ -f ~/.config/nvim/lua/configs/lspconfig.lua ]]; then
   rm ~/.config/nvim/lua/configs/lspconfig.lua
   mv lsp/lspconfig.lua ~/.config/nvim/lua/configs/lspconfig.lua
 fi
+
+# INSTALAMOS LA P10K DE LA ZSH :)
+git clone --depth=1 https://github.com/romkatv/powerlevel10k.git ~/powerlevel10k
+echo 'source ~/powerlevel10k/powerlevel10k.zsh-theme' >> ~/.zshrc
+rm ~/.p10k.zsh
+cp /p10kuser/.p10k.zsh /home/$usuario/
+
+# LO INSTALAMOS PERO PA ROOT
+git clone --depth=1 https://github.com/romkatv/powerlevel10k.git /root/powerlevel10k
+echo 'source ~/powerlevel10k/powerlevel10k.zsh-theme' >> /root/.zshrc
+rm ~/root/p10k.zsh
+sudo cp /p10kroot/.p10k.zsh /root/
 
 python3 -m venv .venv
 source .venv/bin/activate
