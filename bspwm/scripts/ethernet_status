@@ -1,0 +1,7 @@
+#!/bin/bash
+interfaz=$(ifconfig eth0  2>/dev/null | grep "inet " | awk '{print $2}' 2>/dev/null)
+if [[ "$interfaz" ]]; then
+  echo "%{F#1bbf3e}󰖩 %{F#ffffff}$(/usr/sbin/ifconfig eth0 | grep "inet " | awk '{print $2}')%{u-}"
+else
+  echo "%{F#FF4C4C}󱛅 %{F#ffffff}Disconnected"
+fi
